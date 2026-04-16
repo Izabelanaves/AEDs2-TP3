@@ -111,7 +111,6 @@ Restaurante parseRestaurante(const char *s)
 	int campo = 0;
 	char tiposStr[MAX_LINHA] = "";
 
-	/* Parsing com strtok_r (thread-safe e mais controlado) */
 	token = strtok_r(linha, ",", &saveptr);
 
 	while (token != NULL) {
@@ -202,7 +201,8 @@ void lerCsv(ColecaoRestaurantes *colecao, const char *path)
 	}
 
 	char linha[MAX_LINHA];
-	if (fgets(linha, sizeof(linha), file) == NULL) { /* pular cabeçalho */
+	/* pular cabeçalho */
+	if (fgets(linha, sizeof(linha), file) == NULL) {
 		fclose(file);
 		return;
 	}
@@ -210,9 +210,8 @@ void lerCsv(ColecaoRestaurantes *colecao, const char *path)
 	while (fgets(linha, sizeof(linha), file) && colecao->tamanho < MAX_RESTAURANTES) {
 		/* remover newline */
 		linha[strcspn(linha, "\n")] = '\0';
-		if (strlen(linha) > 0) {
+		if (strlen(linha) > 0)
 			colecao->restaurantes[colecao->tamanho++] = parseRestaurante(linha);
-		}
 	}
 
 	fclose(file);
