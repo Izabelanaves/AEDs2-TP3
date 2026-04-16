@@ -236,5 +236,6 @@ int main()
 		}
 	}
 
+	free(colecao);
 	return 0;
 }
