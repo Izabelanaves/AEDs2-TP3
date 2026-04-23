@@ -16,7 +16,9 @@ class Restaurante {
 	private Data dataAbertura;
 	private boolean aberto;
 
-	public Restaurante(int id, String nome, String cidade, int capacidade, double avaliacao, String[] tiposCozinha, int faixaPreco, Hora horarioAbertura, Hora horarioFechamento, Data dataAbertura,boolean aberto){
+	public Restaurante(int id, String nome, String cidade, int capacidade, double avaliacao, String[] tiposCozinha, int faixaPreco, Hora horarioAbertura, Hora horarioFechamento, Data dataAbertura,
+					   boolean aberto)
+	{
 		this.id = id;
 		this.nome = nome;
 		this.cidade = cidade;
@@ -30,9 +32,13 @@ class Restaurante {
 		this.aberto = aberto;
 	}
 
-	public int getId(){ return this.id;}
+	public int getId()
+	{
+		return this.id;
+	}
 
-	public static Restaurante parseRestaurante(String s){
+	public static Restaurante parseRestaurante(String s)
+	{
 		try (Scanner sc = new Scanner(s)) {
 			sc.useDelimiter(",");
 
@@ -57,7 +63,8 @@ class Restaurante {
 		}
 	}
 
-	private static String[] parseTiposCozinha(String s){
+	private static String[] parseTiposCozinha(String s)
+	{
 		int count = 1;
 		for (int i = 0; i < s.length(); ++i)
 			if (s.charAt(i) == ';')
@@ -73,7 +80,8 @@ class Restaurante {
 		return tipos;
 	}
 
-	public String formatar(){
+	public String formatar()
+	{
 		String tiposFormatados = "";
 		for (int i = 0; i < tiposCozinha.length; i++) {
 			tiposFormatados += tiposCozinha[i];
@@ -85,7 +93,8 @@ class Restaurante {
 		for (int i = 0; i < faixaPreco; i++)
 			precoStr += "$";
 
-		return "[" + id + " ## " + nome + " ## " + cidade + " ## " + capacidade + " ## " + avaliacao + " ## [" + tiposFormatados + "] ## " + precoStr + " ## " + horarioAbertura.formatar() + "-" + horarioFechamento.formatar() + " ## " + dataAbertura.formatar() + " ## " + aberto + "]";
+		return "[" + id + " ## " + nome + " ## " + cidade + " ## " + capacidade + " ## " + avaliacao + " ## [" + tiposFormatados + "] ## " + precoStr + " ## " + horarioAbertura.formatar() + "-" +
+			horarioFechamento.formatar() + " ## " + dataAbertura.formatar() + " ## " + aberto + "]";
 	}
 }
 
@@ -93,7 +102,8 @@ class ColecaoRestaurantes {
 	private Restaurante[] restaurantes;
 	private int tamanho;
 
-	public void lerCsv(String path) throws IOException{
+	public void lerCsv(String path) throws IOException
+	{
 		restaurantes = new Restaurante[8192];
 		tamanho = 0;
 
@@ -104,11 +114,13 @@ class ColecaoRestaurantes {
 		}
 	}
 
-	public int getTamanho(){ 
+	public int getTamanho()
+	{
 		return tamanho;
 	}
 
-	public Restaurante[] getRestaurantes(){
+	public Restaurante[] getRestaurantes()
+	{
 		return restaurantes;
 	}
 }
@@ -118,13 +130,15 @@ class Data {
 	private int mes;
 	private int ano;
 
-	public Data(int dia, int mes, int ano){
+	public Data(int dia, int mes, int ano)
+	{
 		this.dia = dia;
 		this.mes = mes;
 		this.ano = ano;
 	}
 
-	public static Data parseData(String s){
+	public static Data parseData(String s)
+	{
 		Scanner sc = new Scanner(s);
 		sc.useDelimiter("-");
 		int ano = sc.nextInt();
@@ -134,28 +148,35 @@ class Data {
 		return new Data(dia, mes, ano);
 	}
 
-	public String formatar(){
+	public String formatar()
+	{
 		String d = (dia < 10 ? "0" : "") + dia;
 		String m = (mes < 10 ? "0" : "") + mes;
 		return d + "/" + m + "/" + ano;
 	}
 
-	public void setAno(int ano){
+	public void setAno(int ano)
+	{
 		this.ano = ano;
 	}
-	public int getAno(){
+	public int getAno()
+	{
 		return this.ano;
 	}
-	public void setMes(int mes){
+	public void setMes(int mes)
+	{
 		this.mes = mes;
 	}
-	public int getMes(){
+	public int getMes()
+	{
 		return this.mes;
 	}
-	public void setDia(int dia){
+	public void setDia(int dia)
+	{
 		this.dia = dia;
 	}
-	public int getDia(){
+	public int getDia()
+	{
 		return this.dia;
 	}
 }
@@ -164,12 +185,14 @@ class Hora {
 	private int hora;
 	private int minuto;
 
-	public Hora(int hora, int minuto){
+	public Hora(int hora, int minuto)
+	{
 		this.hora = hora;
 		this.minuto = minuto;
 	}
 
-	public static Hora parseHora(String s){
+	public static Hora parseHora(String s)
+	{
 		Scanner sc = new Scanner(s);
 		sc.useDelimiter("[^0-9]+");
 		int hora = sc.nextInt();
@@ -178,28 +201,34 @@ class Hora {
 		return new Hora(hora, minuto);
 	}
 
-	public String formatar(){
+	public String formatar()
+	{
 		String h = (hora < 10 ? "0" : "") + hora;
 		String m = (minuto < 10 ? "0" : "") + minuto;
 		return h + ":" + m;
 	}
 
-	public int getHora(){
+	public int getHora()
+	{
 		return this.hora;
 	}
-	public int getMinuto(){
+	public int getMinuto()
+	{
 		return this.minuto;
 	}
-	public void setHora(int hora){
+	public void setHora(int hora)
+	{
 		this.hora = hora;
 	}
-	public void setMinuto(int minuto){
+	public void setMinuto(int minuto)
+	{
 		this.minuto = minuto;
 	}
 }
 
 public class ModelagemI {
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) throws IOException
+	{
 		ColecaoRestaurantes colecao = new ColecaoRestaurantes();
 		colecao.lerCsv("/tmp/restaurantes.csv");
 
