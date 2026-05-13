@@ -105,26 +105,32 @@ class Matriz {
 
 	Matriz multiplicacao(Matriz outra) {
 		Matriz res = new Matriz(linhas, outra.colunas);
-		CelulaMatriz linhaA = inicio;
-		CelulaMatriz linhaC = res.inicio;
+		CelulaMatriz[] linA = new CelulaMatriz[linhas];
+		CelulaMatriz[] colB = new CelulaMatriz[outra.colunas];
+		CelulaMatriz[] linC = new CelulaMatriz[linhas];
+		linA[0] = inicio;
+		linC[0] = res.inicio;
+		for (int i = 1; i < linhas; i++) {
+			linA[i] = linA[i - 1].inf;
+			linC[i] = linC[i - 1].inf;
+		}
+		colB[0] = outra.inicio;
+		for (int j = 1; j < outra.colunas; j++)
+			colB[j] = colB[j - 1].dir;
 		for (int i = 0; i < linhas; i++) {
-			CelulaMatriz colC = linhaC;
+			CelulaMatriz c = linC[i];
 			for (int j = 0; j < outra.colunas; j++) {
 				int soma = 0;
-				CelulaMatriz ca = linhaA;
-				CelulaMatriz cb = outra.inicio;
+				CelulaMatriz a = linA[i];
+				CelulaMatriz b = colB[j];
 				for (int k = 0; k < colunas; k++) {
-					CelulaMatriz cbCol = cb;
-					for (int l = 0; l < j; l++) cbCol = cbCol.dir;
-					soma += ca.valor * cbCol.valor;
-					ca = ca.dir;
-					cb = cb.inf;
+					soma += a.valor * b.valor;
+					a = a.dir;
+					b = b.inf;
 				}
-				colC.valor = soma;
-				colC = colC.dir;
+				c.valor = soma;
+				c = c.dir;
 			}
-			linhaA = linhaA.inf;
-			linhaC = linhaC.inf;
 		}
 		return res;
 	}

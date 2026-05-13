@@ -9,7 +9,7 @@
 #define MAX_CIDADE 128
 #define MAX_LINHA 1024
 
-/* Funcoes auxiliares de forma manual*/
+
 
 int meu_strlen(const char *s)
 {
@@ -129,7 +129,7 @@ typedef struct {
 	int tamanho;
 } ColecaoRestaurantes;
 
-/* Hora */
+
 
 Hora parseHora( char *s)
 {
@@ -148,7 +148,7 @@ char *formatarHora(const  Hora *h, char *buf)
 	return buf;
 }
 
-/* Data */
+
 
 Data parseData( char *s)
 {
@@ -185,7 +185,7 @@ static void parseTiposCozinha( char *s, char tipos[][MAX_NOME], int *numTipos)
 	}
 }
 
-/* Restaurante */
+
 
 Restaurante parseRestaurante(const char *s)
 {
@@ -228,7 +228,7 @@ Restaurante parseRestaurante(const char *s)
 		case 6:
 			r.faixaPreco = meu_strlen(token);
 			break;
-		case 7: // horário "HH:MM-HH:MM"
+		case 7: 
 		{
 			char horA[16] = { 0 }, horF[16] = { 0 };
 			sscanf(token, "%15[^-]", horA);
@@ -238,10 +238,10 @@ Restaurante parseRestaurante(const char *s)
 			r.horarioAbertura = parseHora(horA);
 			r.horarioFechamento = parseHora(horF);
 		} break;
-		case 8: // data
+		case 8: 
 			r.dataAbertura = parseData(token);
 			break;
-		case 9: // aberto
+		case 9: 
 			r.aberto = (strcmp(token, "true") == 0) ? 1 : 0;
 			break;
 		}
@@ -276,7 +276,7 @@ char *formatarRestaurante(const Restaurante *r, char *buf)
 	return buf;
 }
 
-/* ColecaoRestaurantes */
+
 
 void lerCsv(ColecaoRestaurantes *colecao, const char *path)
 {
@@ -284,14 +284,14 @@ void lerCsv(ColecaoRestaurantes *colecao, const char *path)
 	FILE *file = fopen(path, "r");
 
 	char linha[MAX_LINHA];
-	/* pular cabecalho */
+	
 	if (fgets(linha, sizeof(linha), file) == NULL) {
 		fclose(file);
 		return;
 	}
 
 	while (fgets(linha, sizeof(linha), file) && colecao->tamanho < MAX_RESTAURANTES) {
-		/* remover newline manualmente */
+		
 		for (int i = 0; linha[i] != '\0'; i++) {
 			if (linha[i] == '\n' || linha[i] == '\r') {
 				linha[i] = '\0';
@@ -306,9 +306,9 @@ void lerCsv(ColecaoRestaurantes *colecao, const char *path)
 	fclose(file);
 }
 
-/* ========================================================================== */
 
-// Contadores
+
+
 static int num_comparacoes = 0;
 static int num_movimentacoes = 0;
 
@@ -371,11 +371,11 @@ int main(void){
 	}
 
 	clock_t time_begin = clock();
-	countingsort(selecionados); // Roda ordenacao
+	countingsort(selecionados); 
 	clock_t time_end = clock();
 	double tempoExecucaoMs = ((double)(time_end - time_begin)) / CLOCKS_PER_SEC * 1000.0;
 
-	// Log
+	
 	FILE *log_file = fopen("859563_countingsort.txt", "w");
 	fprintf(log_file, "%s\t%d\t%d\t%g", "859563", num_comparacoes, num_movimentacoes, tempoExecucaoMs);
 	fclose(log_file);

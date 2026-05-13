@@ -40,7 +40,7 @@ typedef struct {
 	int tamanho;
 } ColecaoRestaurantes;
 
-/* Funções de Hora */
+
 
 Hora parseHora(const char *s)
 {
@@ -59,7 +59,7 @@ char *formatarHora(const Hora *h, char *buf)
 	return buf;
 }
 
-/* Funções de Data */
+
 
 Data parseData(const char *s)
 {
@@ -79,7 +79,7 @@ char *formatarData(const Data *d, char *buf)
 	return buf;
 }
 
-/* Funções auxiliares */
+
 
 static void parseTiposCozinha(const char *s, char tipos[][MAX_NOME], int *numTipos)
 {
@@ -97,7 +97,7 @@ static void parseTiposCozinha(const char *s, char tipos[][MAX_NOME], int *numTip
 	}
 }
 
-/* Restaurante */
+
 
 Restaurante parseRestaurante(const char *s)
 {
@@ -140,7 +140,7 @@ Restaurante parseRestaurante(const char *s)
 		case 6:
 			r.faixaPreco = (int)strlen(token);
 			break;
-		case 7: // horário "HH:MM-HH:MM"
+		case 7: 
 		{
 			char horA[16] = { 0 }, horF[16] = { 0 };
 			sscanf(token, "%15[^-]", horA);
@@ -150,10 +150,10 @@ Restaurante parseRestaurante(const char *s)
 			r.horarioAbertura = parseHora(horA);
 			r.horarioFechamento = parseHora(horF);
 		} break;
-		case 8: // data
+		case 8: 
 			r.dataAbertura = parseData(token);
 			break;
-		case 9: // aberto
+		case 9: 
 			r.aberto = (strcmp(token, "true") == 0);
 			break;
 		}
@@ -189,7 +189,7 @@ char *formatarRestaurante(const Restaurante *r, char *buf)
 	return buf;
 }
 
-/* ColecaoRestaurantes */
+
 
 void lerCsv(ColecaoRestaurantes *colecao, const char *path)
 {
@@ -201,14 +201,14 @@ void lerCsv(ColecaoRestaurantes *colecao, const char *path)
 	}
 
 	char linha[MAX_LINHA];
-	/* pular cabeçalho */
+	
 	if (fgets(linha, sizeof(linha), file) == NULL) {
 		fclose(file);
 		return;
 	}
 
 	while (fgets(linha, sizeof(linha), file) && colecao->tamanho < MAX_RESTAURANTES) {
-		/* remover newline */
+		
 		linha[strcspn(linha, "\n")] = '\0';
 		if (strlen(linha) > 0)
 			colecao->restaurantes[colecao->tamanho++] = parseRestaurante(linha);
@@ -216,8 +216,6 @@ void lerCsv(ColecaoRestaurantes *colecao, const char *path)
 
 	fclose(file);
 }
-
-/* Main */
 
 int main()
 {

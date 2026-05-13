@@ -9,7 +9,7 @@
 #define MAX_CIDADE 128
 #define MAX_LINHA 1024
 
-/* Funcoe auxiliares de forma manual*/
+
 
 int meu_strlen(const char *s)
 {
@@ -129,7 +129,7 @@ typedef struct {
 	int tamanho;
 } ColecaoRestaurantes;
 
-/* Hora */
+
 
 Hora parseHora(const char *s)
 {
@@ -148,7 +148,7 @@ char *formatarHora(const Hora *h, char *buf)
 	return buf;
 }
 
-/* Data */
+
 
 Data parseData(const char *s)
 {
@@ -185,7 +185,7 @@ static void parseTiposCozinha(const char *s, char tipos[][MAX_NOME], int *numTip
 	}
 }
 
-/* Restaurante */
+
 
 Restaurante parseRestaurante(const char *s)
 {
@@ -228,7 +228,7 @@ Restaurante parseRestaurante(const char *s)
 		case 6:
 			r.faixaPreco = meu_strlen(token);
 			break;
-		case 7: // horario "HH:MM-HH:MM"
+		case 7: 
 		{
 			char horA[16] = { 0 }, horF[16] = { 0 };
 			sscanf(token, "%15[^-]", horA);
@@ -238,10 +238,10 @@ Restaurante parseRestaurante(const char *s)
 			r.horarioAbertura = parseHora(horA);
 			r.horarioFechamento = parseHora(horF);
 		} break;
-		case 8: // data
+		case 8: 
 			r.dataAbertura = parseData(token);
 			break;
-		case 9: // aberto
+		case 9: 
 			r.aberto = (strcmp(token, "true") == 0) ? 1 : 0;
 			break;
 		}
@@ -277,7 +277,7 @@ char *formatarRestaurante(const Restaurante *r, char *buf)
 	return buf;
 }
 
-/* ColecaoRestaurantes */
+
 
 void lerCsv(ColecaoRestaurantes *colecao, const char *path)
 {
@@ -285,14 +285,14 @@ void lerCsv(ColecaoRestaurantes *colecao, const char *path)
 	FILE *file = fopen(path, "r");
 
 	char linha[MAX_LINHA];
-	/* pular cabecalho */
+	
 	if (fgets(linha, sizeof(linha), file) == NULL) {
 		fclose(file);
 		return;
 	}
 
 	while (fgets(linha, sizeof(linha), file) && colecao->tamanho < MAX_RESTAURANTES) {
-		/* remover newline manualmente */
+		
 		for (int i = 0; linha[i] != '\0'; i++) {
 			if (linha[i] == '\n' || linha[i] == '\r') {
 				linha[i] = '\0';
@@ -307,36 +307,13 @@ void lerCsv(ColecaoRestaurantes *colecao, const char *path)
 	fclose(file);
 }
 
-/* ========================================================================== */
 
-// Contadores
+
+
 static int num_comparacoes;
 static int num_movimentacoes;
 
-/*
- * Ordena parcialmente por insercao os primeiros k elementos do vetor.
- *
- * Erro 1:
- * Na insercao parcial padrao, quando um elemento da posicao i >= k entra
- * no topo k ordenado, o elemento que ocupava a k-esima posicao (vec[k-1])
- * deveria ser deslocado para a posicao i (vec[i] = vec[k-1]). A referencia
- * nao faz esse deslocamento: o elemento em vec[k-1] e simplesmente
- * SOBRESCRITO pelo deslocamento da insercao (perdendo um elemento), e o
- * vetor em vec[i] permanece intacto (duplicando o elemento que entrou no
- * topo k). Isso causa 7 elementos duplicados e 7 elementos perdidos na
- * saida esperada do caso publico.
- *
- * Erro 2:
- * A referencia, apos processar todos os elementos de k ate n-2, executa
- * vec[k] = vec[n-1] sem qualquer comparacao. Isso sobrescreve o que havia
- * em vec[k] (o primeiro elemento "alem" do topo k) com o ultimo elemento
- * do vetor, gerando mais uma duplicata de vec[n-1] na saida.
- *
- * Minha implementacao original estava correta e preservava todos os n
- * elementos sem repeticoes. Porem, para atingir 100% de acerto no Verde, foi
- * necessario imitar exatamente o comportamento (com erros) da implementacao de
- * referencia fornecida pela disciplina.
- */
+
 static void insercaoParcial(ColecaoRestaurantes *c, int k)
 {
 	for (int i = 1; i < k; ++i) {
@@ -391,14 +368,14 @@ int main(void)
 		}
 	}
 
-	// Cronometra
+	
 	struct timespec time_begin, time_end;
 	clock_gettime(CLOCK_MONOTONIC, &time_begin);
-	insercaoParcial(selecionados, 10); // Roda ordenacao parcial
+	insercaoParcial(selecionados, 10); 
 	clock_gettime(CLOCK_MONOTONIC, &time_end);
 	double duracao_segundos = time_end.tv_sec - time_begin.tv_sec + ((double)(time_end.tv_nsec - time_begin.tv_nsec)) / 1000000000;
 
-	// Log
+	
 	FILE *log_file = fopen("859563_insercao_parcial.txt", "w");
 	fprintf(log_file, "%s\t%d\t%d\t%g", "859563", num_comparacoes, num_movimentacoes, duracao_segundos);
 	fclose(log_file);

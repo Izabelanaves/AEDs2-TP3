@@ -10,7 +10,7 @@
 #define MAX_CIDADE 128
 #define MAX_LINHA 1024
 
-/* Funcoe auxiliares de forma manual*/
+
 
 int meu_strlen(const char *s)
 {
@@ -130,7 +130,7 @@ typedef struct {
 	int tamanho;
 } ColecaoRestaurantes;
 
-/* Hora */
+
 
 Hora parseHora(const char *s)
 {
@@ -149,7 +149,7 @@ char *formatarHora(const Hora *h, char *buf)
 	return buf;
 }
 
-/* Data */
+
 
 Data parseData(const char *s)
 {
@@ -186,7 +186,7 @@ static void parseTiposCozinha(const char *s, char tipos[][MAX_NOME], int *numTip
 	}
 }
 
-/* Restaurante */
+
 
 Restaurante parseRestaurante(const char *s)
 {
@@ -229,7 +229,7 @@ Restaurante parseRestaurante(const char *s)
 		case 6:
 			r.faixaPreco = meu_strlen(token);
 			break;
-		case 7: // horário "HH:MM-HH:MM"
+		case 7: 
 		{
 			char horA[16] = { 0 }, horF[16] = { 0 };
 			sscanf(token, "%15[^-]", horA);
@@ -239,10 +239,10 @@ Restaurante parseRestaurante(const char *s)
 			r.horarioAbertura = parseHora(horA);
 			r.horarioFechamento = parseHora(horF);
 		} break;
-		case 8: // data
+		case 8: 
 			r.dataAbertura = parseData(token);
 			break;
-		case 9: // aberto
+		case 9: 
 			r.aberto = (strcmp(token, "true") == 0) ? 1 : 0;
 			break;
 		}
@@ -278,7 +278,7 @@ char *formatarRestaurante(const Restaurante *r, char *buf)
 	return buf;
 }
 
-/* ColecaoRestaurantes */
+
 
 void lerCsv(ColecaoRestaurantes *colecao, const char *path)
 {
@@ -286,14 +286,14 @@ void lerCsv(ColecaoRestaurantes *colecao, const char *path)
 	FILE *file = fopen(path, "r");
 
 	char linha[MAX_LINHA];
-	/* pular cabecalho */
+	
 	if (fgets(linha, sizeof(linha), file) == NULL) {
 		fclose(file);
 		return;
 	}
 
 	while (fgets(linha, sizeof(linha), file) && colecao->tamanho < MAX_RESTAURANTES) {
-		/* remover newline manualmente */
+		
 		for (int i = 0; linha[i] != '\0'; i++) {
 			if (linha[i] == '\n' || linha[i] == '\r') {
 				linha[i] = '\0';
@@ -308,9 +308,9 @@ void lerCsv(ColecaoRestaurantes *colecao, const char *path)
 	fclose(file);
 }
 
-/* ========================================================================== */
 
-// Contadores
+
+
 static int num_comparacoes;
 static int num_movimentacoes;
 
@@ -323,7 +323,7 @@ static void swap(Restaurante *a, Restaurante *b) {
 	Restaurante tmp = *a;
 	*a = *b;
 	*b = tmp;
-	++num_movimentacoes; // Conta movimentacao
+	++num_movimentacoes; 
 }
 
 static void selecao(ColecaoRestaurantes *c)
@@ -332,7 +332,7 @@ static void selecao(ColecaoRestaurantes *c)
 		int menor = i;
 
 		for (int j = i + 1; j < c->tamanho; ++j) {
-			++num_comparacoes; // Conta comparacao
+			++num_comparacoes; 
 			if (compara(c->restaurantes[j], c->restaurantes[menor]) < 0)
 				menor = j;
 		}
@@ -347,7 +347,7 @@ static bool pesquisaBinaria(ColecaoRestaurantes *c, char *nome)
 	bool encontrado = false;
 	while (esq <= dir && !encontrado) {
 		int meio = (esq + dir) / 2;
-		++num_comparacoes; // Conta comparacao
+		++num_comparacoes; 
 		int cmp = strcmp(c->restaurantes[meio].nome, nome);
 		if (cmp == 0)
 			encontrado = true;
@@ -387,16 +387,16 @@ int main(void)
 		nBusca++;
 	}
 
-	// Cronometra
+	
 	struct timespec time_begin, time_end;
 	clock_gettime(CLOCK_MONOTONIC, &time_begin);
-	selecao(selecionados); // Ordena para viabilizar busca binaria
+	selecao(selecionados); 
 	for (int i = 0; i < nBusca; i++)
 		puts(pesquisaBinaria(selecionados, nomesBusca[i]) ? "SIM" : "NAO");
 	clock_gettime(CLOCK_MONOTONIC, &time_end);
 	double duracao_segundos = time_end.tv_sec - time_begin.tv_sec + ((double)(time_end.tv_nsec - time_begin.tv_sec))/1000000000;
 
-	// Log
+	
 	FILE *log_file = fopen("859563_binaria.txt", "w");
 	fprintf(log_file, "%s\t%d\t%d\t%g", "859563", num_comparacoes, num_movimentacoes, duracao_segundos);
 	fclose(log_file);

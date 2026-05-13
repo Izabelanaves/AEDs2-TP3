@@ -1,5 +1,5 @@
 import java.io.File;
-import java.io.FileWriter; // Para gravar o arquivo de log
+import java.io.FileWriter; 
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -193,7 +193,7 @@ class Hora {
 }
 
 public class PesquisaSequencial {
-	// Variáveis para o Log
+	
 	static int comparacoes = 0;
 	static int movimentacoes = 0;
 
@@ -215,7 +215,7 @@ public class PesquisaSequencial {
 				for (int i = 0; i < colecao.getTamanho(); i++) {
 					if (todos[i].getId() == idBuscado) {
 						arrayBusca[n++] = todos[i];
-						//System.err.println(todos[i].getCidade());
+						
 						i = colecao.getTamanho();
 					}
 				}
@@ -235,13 +235,13 @@ public class PesquisaSequencial {
 		}
 		sc.close();
 
-		// Cronometra
+		
 		double inicio = System.nanoTime();
 		for (int i = 0; i < nBusca; i++)
 			System.out.println(pesquisaSequencial(arrayBusca, n, nomesBusca[i]) ? "SIM" : "NAO");
 		double tempoExecucaoMs = (System.nanoTime() - inicio) / 1_000_000.0;
 
-		// Salva log
+		
 		try (FileWriter writer = new FileWriter("859563_sequencial.txt")) {
 			writer.write(String.format("859563\t%d\t%d\t%g", comparacoes, movimentacoes, tempoExecucaoMs));
 		}
@@ -250,7 +250,7 @@ public class PesquisaSequencial {
 	static boolean pesquisaSequencial(Restaurante[] vec, int n, String nomeBuscado)
 	{
 		for (int i = 0; i < n; i++) {
-			if (/* Conta comparacao */ (++PesquisaSequencial.comparacoes >= 0) && vec[i].getNome().compareTo(nomeBuscado) == 0)
+			if ( (++PesquisaSequencial.comparacoes >= 0) && vec[i].getNome().compareTo(nomeBuscado) == 0)
 				return true;
 		}
 		return false;

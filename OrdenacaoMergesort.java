@@ -1,5 +1,5 @@
 import java.io.File;
-import java.io.FileWriter; // Para gravar o arquivo de log
+import java.io.FileWriter; 
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -193,7 +193,7 @@ class Hora {
 }
 
 public class OrdenacaoMergesort {
-	// Variáveis para o Log
+	
 	static int comparacoes = 0;
 	static int movimentacoes = 0;
 
@@ -215,7 +215,7 @@ public class OrdenacaoMergesort {
 				for (int i = 0; i < colecao.getTamanho(); i++) {
 					if (todos[i].getId() == idBuscado) {
 						arrayBusca[n++] = todos[i];
-						//System.err.println(todos[i].getCidade());
+						
 						i = colecao.getTamanho();
 					}
 				}
@@ -223,12 +223,12 @@ public class OrdenacaoMergesort {
 		}
 		sc.close();
 
-		// Cronometra
+		
 		double inicio = System.nanoTime();
-		mergesort(arrayBusca, n); // Roda ordenacao
+		mergesort(arrayBusca, n); 
 		double tempoExecucaoMs = (System.nanoTime() - inicio) / 1_000_000.0;
 
-		// Salva log
+		
 		try (FileWriter writer = new FileWriter("859563_mergesort.txt")) {
 			writer.write(String.format("859563\t%d\t%d\t%g", comparacoes, movimentacoes, tempoExecucaoMs));
 		}
@@ -248,7 +248,7 @@ public class OrdenacaoMergesort {
 
 		int i = 0, j = 0, k = esq;
 		while (i < n1 && j < n2) {
-			++OrdenacaoMergesort.comparacoes; // Conta comparacao
+			++OrdenacaoMergesort.comparacoes; 
 			int cmp = L[i].getCidade().compareTo(R[j].getCidade());
 			if (cmp == 0) cmp = L[i].getNome().compareTo(R[j].getNome());
 			if (cmp <= 0) { vec[k++] = L[i++]; }

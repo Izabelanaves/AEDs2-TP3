@@ -291,7 +291,7 @@ void lerCsv(ColecaoRestaurantes *colecao, const char *path)
 	fclose(file);
 }
 
-/* ========================================================================== */
+
 
 static int num_comparacoes;
 static int num_movimentacoes;

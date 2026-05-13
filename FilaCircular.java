@@ -131,7 +131,7 @@ class Hora {
     public String formatar() { return String.format("%02d:%02d", hora, minuto); }
 }
 
-/*========================== Fila Circular =====================================*/
+
 class Fila {
     private Restaurante[] array;
     private int primeiro;

@@ -8,7 +8,7 @@
 #define MAX_CIDADE 128
 #define MAX_LINHA 1024
 
-/* Funcoe auxiliares de forma manual*/
+
 
 int meu_strlen(const char *s) {
 	int len = 0;
@@ -109,7 +109,7 @@ typedef struct {
 	int tamanho;
 } ColecaoRestaurantes;
 
-/* Hora */
+
 
 Hora parseHora(const char *s)
 {
@@ -128,7 +128,7 @@ char *formatarHora(const Hora *h, char *buf)
 	return buf;
 }
 
-/* Data */
+
 
 Data parseData(const char *s)
 {
@@ -163,7 +163,7 @@ static void parseTiposCozinha(const char *s, char tipos[][MAX_NOME], int *numTip
 	}
 }
 
-/* Restaurante */
+
 
 Restaurante parseRestaurante(const char *s){
 	Restaurante r = { 0 };
@@ -205,7 +205,7 @@ Restaurante parseRestaurante(const char *s){
 			case 6:
 				r.faixaPreco = meu_strlen(token);
 				break;
-			case 7: // horário "HH:MM-HH:MM"
+			case 7: 
 				{
 					char horA[16] = { 0 }, horF[16] = { 0 };
 					sscanf(token, "%15[^-]", horA);
@@ -215,10 +215,10 @@ Restaurante parseRestaurante(const char *s){
 					r.horarioAbertura = parseHora(horA);
 					r.horarioFechamento = parseHora(horF);
 				} break;
-			case 8: // data
+			case 8: 
 				r.dataAbertura = parseData(token);
 				break;
-			case 9: // aberto
+			case 9: 
 				r.aberto = (strcmp(token, "true") == 0) ? 1 : 0;
 				break;
 		}
@@ -253,7 +253,7 @@ char *formatarRestaurante(const Restaurante *r, char *buf){
 	return buf;
 }
 
-/* ColecaoRestaurantes */
+
 
 void lerCsv(ColecaoRestaurantes *colecao, const char *path){
 	colecao->tamanho = 0;
@@ -264,14 +264,14 @@ void lerCsv(ColecaoRestaurantes *colecao, const char *path){
 	}
 
 	char linha[MAX_LINHA];
-	/* pular cabecalho */
+	
 	if (fgets(linha, sizeof(linha), file) == NULL) {
 		fclose(file);
 		return;
 	}
 
 	while (fgets(linha, sizeof(linha), file) && colecao->tamanho < MAX_RESTAURANTES) {
-		/* remover newline manualmente */
+		
 		for (int i = 0; linha[i] != '\0'; i++) {
 			if (linha[i] == '\n' || linha[i] == '\r') {
 				linha[i] = '\0';

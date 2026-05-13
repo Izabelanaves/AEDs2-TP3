@@ -279,12 +279,12 @@ void pesquisar(No *raiz, const char *nome)
 	No *atual = raiz;
 	while (atual != NULL) {
 		++num_comparacoes;
-		if (strcmp(nome, atual->restaurante.nome) == 0) {
+		int cmp = strcmp(nome, atual->restaurante.nome);
+		if (cmp == 0) {
 			printf(" SIM\n");
 			return;
 		}
-		++num_comparacoes;
-		if (strcmp(nome, atual->restaurante.nome) < 0) {
+		if (cmp < 0) {
 			printf(" esq");
 			atual = atual->esq;
 		} else {

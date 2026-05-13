@@ -40,10 +40,10 @@ class Arvore {
 	private String pesquisarRec(No no, String nome, String caminho) {
 		if (no == null) return caminho + " NAO";
 		ArvoreBinaria.comparacoes++;
-		if (nome.compareTo(no.restaurante.getNome()) == 0)
+		int cmp = nome.compareTo(no.restaurante.getNome());
+		if (cmp == 0)
 			return caminho + " SIM";
-		ArvoreBinaria.comparacoes++;
-		if (nome.compareTo(no.restaurante.getNome()) < 0)
+		if (cmp < 0)
 			return pesquisarRec(no.esq, nome, caminho + " esq");
 		else
 			return pesquisarRec(no.dir, nome, caminho + " dir");

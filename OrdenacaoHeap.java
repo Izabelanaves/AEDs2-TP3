@@ -1,5 +1,5 @@
 import java.io.File;
-import java.io.FileWriter; // Para gravar o arquivo de log
+import java.io.FileWriter; 
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -188,7 +188,7 @@ class Hora {
 }
 
 public class OrdenacaoHeap {
-	// Variáveis para o Log
+	
 	static int comparacoes = 0;
 	static int movimentacoes = 0;
 
@@ -209,7 +209,7 @@ public class OrdenacaoHeap {
 				for (int i = 0; i < colecao.getTamanho(); i++) {
 					if (todos[i].getId() == idBuscado) {
 						arrayBusca[n++] = todos[i];
-						//System.err.println(todos[i].getCidade());
+						
 						i = colecao.getTamanho();
 					}
 				}
@@ -217,12 +217,12 @@ public class OrdenacaoHeap {
 		}
 		sc.close();
 
-		// Cronometra
+		
 		double inicio = System.nanoTime();
-		heapsort(arrayBusca, n); // Roda ordenacao
+		heapsort(arrayBusca, n); 
 		double tempoExecucaoMs = (System.nanoTime() - inicio) / 1_000_000.0;
 
-		// Salva log
+		
 		try (FileWriter writer = new FileWriter("859563_heapsort.txt")) {
 			writer.write(String.format("859563\t%d\t%d\t%g", comparacoes, movimentacoes, tempoExecucaoMs));
 		}
@@ -237,13 +237,13 @@ public class OrdenacaoHeap {
 		int esq = 2 * i + 1, dir = 2 * i + 2;
 
 		if (esq < n) {
-			++OrdenacaoHeap.comparacoes; // Conta comparacao
+			++OrdenacaoHeap.comparacoes; 
 			int cmp = vec[esq].getDataAbertura().compareTo(vec[maior].getDataAbertura());
 			if (cmp == 0) cmp = vec[esq].getNome().compareTo(vec[maior].getNome());
 			if (cmp > 0) maior = esq;
 		}
 		if (dir < n) {
-			++OrdenacaoHeap.comparacoes; // Conta comparacao
+			++OrdenacaoHeap.comparacoes; 
 			int cmp = vec[dir].getDataAbertura().compareTo(vec[maior].getDataAbertura());
 			if (cmp == 0) cmp = vec[dir].getNome().compareTo(vec[maior].getNome());
 			if (cmp > 0) maior = dir;
@@ -251,7 +251,7 @@ public class OrdenacaoHeap {
 
 		if (maior != i) {
 			Restaurante tmp = vec[i]; vec[i] = vec[maior]; vec[maior] = tmp;
-			++OrdenacaoHeap.movimentacoes; // Conta movimentacao
+			++OrdenacaoHeap.movimentacoes; 
 			heapify(vec, n, maior);
 		}
 	}
@@ -262,7 +262,7 @@ public class OrdenacaoHeap {
 
 		for (int i = n - 1; i > 0; i--) {
 			Restaurante tmp = vec[0]; vec[0] = vec[i]; vec[i] = tmp;
-			++OrdenacaoHeap.movimentacoes; // Conta movimentacao
+			++OrdenacaoHeap.movimentacoes; 
 			heapify(vec, i, 0);
 		}
 	}

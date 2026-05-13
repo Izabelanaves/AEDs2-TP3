@@ -50,7 +50,7 @@ class Restaurante {
 			String[] tiposCozinha = parseTiposCozinha(sc.next());
 			int faixaPreco = sc.next().length();
 
-			// Lê o bloco de horas "HH:MM-HH:MM" e usa outro Scanner para quebrar, evitando .split()
+			
 			sc.useDelimiter("-");
 			Hora horarioAbertura = Hora.parseHora(sc.next());
 			sc.useDelimiter(",");
@@ -65,7 +65,7 @@ class Restaurante {
 
 	private static String[] parseTiposCozinha(String s)
 	{
-		// Conta quantos ';' existem para definir o tamanho do array cru
+		
 		int count = 1;
 		for (int i = 0; i < s.length(); ++i)
 			if (s.charAt(i) == ';')

@@ -1,5 +1,5 @@
 import java.io.File;
-import java.io.FileWriter; // Para gravar o arquivo de log
+import java.io.FileWriter; 
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -188,7 +188,7 @@ class Hora {
 }
 
 public class OrdenacaoInsercao {
-	// Variáveis para o Log
+	
 	static int comparacoes = 0;
 	static int movimentacoes = 0;
 
@@ -210,7 +210,7 @@ public class OrdenacaoInsercao {
 				for (int i = 0; i < colecao.getTamanho(); i++) {
 					if (todos[i].getId() == idBuscado) {
 						arrayBusca[n++] = todos[i];
-						//System.err.println(todos[i].getCidade());
+						
 						i = colecao.getTamanho();
 					}
 				}
@@ -218,12 +218,12 @@ public class OrdenacaoInsercao {
 		}
 		sc.close();
 
-		// Cronometra
+		
 		double inicio = System.nanoTime();
-		ordenaInsercao(arrayBusca, n); // Roda ordenacao
+		ordenaInsercao(arrayBusca, n); 
 		double tempoExecucaoMs = (System.nanoTime() - inicio) / 1_000_000.0;
 
-		// Salva log
+		
 		try (FileWriter writer = new FileWriter("859563_insercao.txt")) {
 			writer.write(String.format("859563\t%d\t%d\t%g", comparacoes, movimentacoes, tempoExecucaoMs));
 		}
@@ -238,13 +238,13 @@ public class OrdenacaoInsercao {
 			Restaurante temp = vec[i];
 			int j;
 
-			for (j = i - 1; j >= 0 && /* Conta comparacao */ (++OrdenacaoInsercao.comparacoes >= 0) && temp.getCidade().compareTo(vec[j].getCidade()) < 0; --j) {
+			for (j = i - 1; j >= 0 &&  (++OrdenacaoInsercao.comparacoes >= 0) && temp.getCidade().compareTo(vec[j].getCidade()) < 0; --j) {
 				vec[j + 1] = vec[j];
-				++OrdenacaoInsercao.movimentacoes; // Conta movimentacao
+				++OrdenacaoInsercao.movimentacoes; 
 			}
 
 			vec[j + 1] = temp;
-			++OrdenacaoInsercao.movimentacoes; // Conta movimentacao
+			++OrdenacaoInsercao.movimentacoes; 
 		}
 	}
 }

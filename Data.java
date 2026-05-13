@@ -1,18 +1,18 @@
 import java.util.Scanner;
 
 public class Data{
-	//Atributos que fazem parte da classe data
+	
 	private int dia;
 	private int mes;
 	private int ano;
-	//Metodo construtor
+	
 	public Data(int dia, int mes, int ano){
-		//configurando os atributos
+		
 		this.dia = dia;
 		this.mes = mes;
 		this.ano = ano;
 	}
-		//Implementar os metodos get dos atributos
+		
 
 	public static Data parseData (String s){
 			Scanner sc = new Scanner (s);
